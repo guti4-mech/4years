@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coldplay 2027 - Luchi</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0b1020;color:white;text-align:center;padding:40px}
+.card{max-width:700px;margin:auto;background:#151b31;padding:30px;border-radius:20px}
+h1{margin-top:0}
+.countdown{font-size:2rem;font-weight:bold}
+.small{opacity:.8}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🎵 Coldplay 2027</h1>
+<h2>Para Luchi y 1 invitado ❤️</h2>
+
+<div id="tbd">
+<h3>TO BE DETERMINED</h3>
+<p>La fecha del concierto todavía no ha sido anunciada.</p>
+<p>Cuando se conozca, introduce la fecha en el código y aparecerá automáticamente la cuenta atrás.</p>
+</div>
+
+<div id="countdown" style="display:none">
+<h3>Cuenta atrás para el concierto</h3>
+<div class="countdown" id="timer"></div>
+</div>
+</div>
+
+<script>
+// CAMBIA ESTA FECHA CUANDO SE ANUNCIE EL CONCIERTO
+const concertDate = ""; // ejemplo: "2027-06-15T21:00:00"
+
+if(concertDate){
+ document.getElementById("tbd").style.display="none";
+ document.getElementById("countdown").style.display="block";
+
+ const target = new Date(concertDate).getTime();
+ setInterval(()=>{
+   const now = new Date().getTime();
+   const d = target-now;
+   const days=Math.floor(d/(1000*60*60*24));
+   const hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+   const mins=Math.floor((d%(1000*60*60))/(1000*60));
+   const secs=Math.floor((d%(1000*60))/1000);
+   document.getElementById("timer").innerHTML =
+      `${days} días ${hours} h ${mins} min ${secs} s`;
+ },1000);
+}
+</script>
+</body>
+</html>
