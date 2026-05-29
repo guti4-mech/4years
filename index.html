@@ -1,53 +1,361 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coldplay 2027 - Luchi</title>
-<style>
-body{font-family:Arial,sans-serif;background:#0b1020;color:white;text-align:center;padding:40px}
-.card{max-width:700px;margin:auto;background:#151b31;padding:30px;border-radius:20px}
-h1{margin-top:0}
-.countdown{font-size:2rem;font-weight:bold}
-.small{opacity:.8}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coldplay 2027 · Para Luchi</title>
+  <style>
+    :root{
+      --pink:#ff4fb8;
+      --cyan:#43e7ff;
+      --yellow:#ffe45c;
+      --green:#7dff8a;
+      --purple:#9b6cff;
+      --bg:#050816;
+      --card:rgba(12,16,38,.78);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,79,184,.35), transparent 28%),
+        radial-gradient(circle at 80% 15%, rgba(67,231,255,.25), transparent 28%),
+        radial-gradient(circle at 50% 85%, rgba(125,255,138,.18), transparent 30%),
+        linear-gradient(135deg,#050816,#101632 48%,#070816);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+      background-size:70px 70px, 110px 110px;
+      background-position:0 0, 30px 40px;
+      opacity:.22;
+      pointer-events:none;
+    }
+
+    .wrap{
+      position:relative;
+      max-width:900px;
+      margin:0 auto;
+      padding:40px 18px;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .card{
+      width:100%;
+      padding:34px 24px 28px;
+      border-radius:32px;
+      background:var(--card);
+      box-shadow:0 0 50px rgba(67,231,255,.20), inset 0 0 0 1px rgba(255,255,255,.13);
+      backdrop-filter: blur(14px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:2px;
+      border-radius:32px;
+      background:linear-gradient(120deg,var(--pink),var(--yellow),var(--green),var(--cyan),var(--purple),var(--pink));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      pointer-events:none;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:8px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18);
+      letter-spacing:.18em;
+      font-weight:700;
+      font-size:.75rem;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:22px 0 4px;
+      font-size:clamp(3rem, 9vw, 6.4rem);
+      line-height:.9;
+      letter-spacing:.06em;
+      background:linear-gradient(90deg,#ff4fb8,#ffe45c,#7dff8a,#43e7ff,#9b6cff,#ff4fb8);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow:0 0 35px rgba(255,255,255,.12);
+    }
+
+    h2{
+      margin:8px 0 8px;
+      font-size:clamp(1.2rem, 4vw, 2rem);
+      font-weight:500;
+    }
+
+    .subtitle{
+      color:#ffd8f0;
+      font-size:1.05rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:28px;
+    }
+
+    .message{
+      font-size:clamp(1.45rem, 5vw, 2.5rem);
+      line-height:1.25;
+      margin:26px auto;
+      max-width:680px;
+      font-family: "Segoe Script", "Bradley Hand", cursive;
+      color:#fff;
+    }
+
+    .ticket{
+      margin:26px auto;
+      max-width:680px;
+      padding:22px;
+      border-radius:22px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    .ticket .label{
+      color:var(--yellow);
+      letter-spacing:.22em;
+      font-size:.8rem;
+      font-weight:800;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .ticket .main{
+      font-size:clamp(1.25rem,4vw,2rem);
+      font-weight:800;
+      letter-spacing:.04em;
+    }
+
+    .ticket .for{
+      margin-top:12px;
+      font-size:clamp(1.2rem,4vw,2rem);
+      font-family:"Segoe Script", "Bradley Hand", cursive;
+    }
+
+    .panel{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:30px 0 24px;
+    }
+
+    .mini{
+      padding:16px 10px;
+      border-radius:18px;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.13);
+    }
+
+    .mini strong{
+      display:block;
+      color:var(--cyan);
+      margin-bottom:5px;
+      font-size:.85rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    #tbd, #countdown{
+      margin-top:24px;
+      padding:24px 18px;
+      border-radius:24px;
+      background:rgba(0,0,0,.36);
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    #tbd h3, #countdown h3{
+      margin:0 0 12px;
+      color:var(--yellow);
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+
+    .timer{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .timebox{
+      padding:14px 8px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+    }
+
+    .timebox span{
+      display:block;
+      font-size:clamp(1.8rem,7vw,3.4rem);
+      font-weight:900;
+      color:white;
+    }
+
+    .timebox small{
+      color:#d6d9ff;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:.68rem;
+    }
+
+    .footer{
+      margin-top:24px;
+      color:#ffd8f0;
+      font-size:1.05rem;
+    }
+
+    .heart{
+      color:var(--pink);
+      animation:pulse 1.4s infinite;
+      display:inline-block;
+    }
+
+    @keyframes pulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.18)}
+    }
+
+    .confetti{
+      position:absolute;
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      animation:float 8s infinite ease-in-out;
+      opacity:.8;
+    }
+
+    .c1{left:8%;top:12%;background:var(--pink)}
+    .c2{left:85%;top:18%;background:var(--cyan);animation-delay:1s}
+    .c3{left:18%;bottom:12%;background:var(--yellow);animation-delay:2s}
+    .c4{right:12%;bottom:20%;background:var(--green);animation-delay:3s}
+
+    @keyframes float{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-18px)}
+    }
+
+    @media(max-width:650px){
+      .panel{grid-template-columns:1fr}
+      .timer{grid-template-columns:repeat(2,1fr)}
+      .card{padding:28px 16px}
+    }
+  </style>
 </head>
+
 <body>
-<div class="card">
-<h1>🎵 Coldplay 2027</h1>
-<h2>Para Luchi y 1 invitado ❤️</h2>
+  <div class="wrap">
+    <span class="confetti c1"></span>
+    <span class="confetti c2"></span>
+    <span class="confetti c3"></span>
+    <span class="confetti c4"></span>
 
-<div id="tbd">
-<h3>TO BE DETERMINED</h3>
-<p>La fecha del concierto todavía no ha sido anunciada.</p>
-</div>
+    <main class="card">
+      <span class="badge">Vale regalo</span>
 
-<div id="countdown" style="display:none">
-<h3>Cuenta atrás para el concierto</h3>
-<div class="countdown" id="timer"></div>
-</div>
-</div>
+      <h1>COLDPLAY</h1>
+      <h2>Concierto 2027</h2>
+      <div class="subtitle">Music of the Spheres Tour</div>
 
-<script>
-// CAMBIA ESTA FECHA CUANDO SE ANUNCIE EL CONCIERTO
-const concertDate = ""; // ejemplo: "2027-06-15T21:00:00"
+      <div class="message">
+        Porque los mejores momentos<br>
+        se viven juntos <span class="heart">♥</span>
+      </div>
 
-if(concertDate){
- document.getElementById("tbd").style.display="none";
- document.getElementById("countdown").style.display="block";
+      <section class="ticket">
+        <div class="label">Este vale incluye</div>
+        <div class="main">2 entradas para el concierto de Coldplay en 2027</div>
+        <div class="for">Para Luchi y 1 invitado <span class="heart">♥</span></div>
+      </section>
 
- const target = new Date(concertDate).getTime();
- setInterval(()=>{
-   const now = new Date().getTime();
-   const d = target-now;
-   const days=Math.floor(d/(1000*60*60*24));
-   const hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
-   const mins=Math.floor((d%(1000*60*60))/(1000*60));
-   const secs=Math.floor((d%(1000*60))/1000);
-   document.getElementById("timer").innerHTML =
-      `${days} días ${hours} h ${mins} min ${secs} s`;
- },1000);
-}
-</script>
+      <section class="panel">
+        <div class="mini">
+          <strong>Fecha</strong>
+          Por confirmar
+        </div>
+        <div class="mini">
+          <strong>Lugar</strong>
+          Por confirmar
+        </div>
+        <div class="mini">
+          <strong>Entradas</strong>
+          Luchi + 1
+        </div>
+      </section>
+
+      <section id="tbd">
+        <h3>To be determined</h3>
+        <p>La fecha del concierto todavía no se ha anunciado.</p>
+        <p>Cuando salga la fecha, aquí empezará la cuenta atrás para nuestro concierto.</p>
+      </section>
+
+      <section id="countdown" style="display:none">
+        <h3>Cuenta atrás para el concierto</h3>
+        <div class="timer">
+          <div class="timebox"><span id="days">0</span><small>días</small></div>
+          <div class="timebox"><span id="hours">0</span><small>horas</small></div>
+          <div class="timebox"><span id="minutes">0</span><small>minutos</small></div>
+          <div class="timebox"><span id="seconds">0</span><small>segundos</small></div>
+        </div>
+      </section>
+
+      <div class="footer">Nuestro próximo recuerdo juntos · Te quiero <span class="heart">♥</span></div>
+    </main>
+  </div>
+
+  <script>
+    // CAMBIA SOLO ESTA LÍNEA CUANDO SE ANUNCIE EL CONCIERTO.
+    // Formato: "AAAA-MM-DDTHH:MM:SS"
+    // Ejemplo: const concertDate = "2027-07-10T21:00:00";
+    const concertDate = "";
+
+    if (concertDate) {
+      document.getElementById("tbd").style.display = "none";
+      document.getElementById("countdown").style.display = "block";
+
+      const target = new Date(concertDate).getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          document.getElementById("countdown").innerHTML =
+            "<h3>¡Ha llegado el día!</h3><p>Hoy toca vivirlo juntos ♥</p>";
+          return;
+        }
+
+        document.getElementById("days").textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        document.getElementById("minutes").textContent = Math.floor((diff / (1000 * 60)) % 60);
+        document.getElementById("seconds").textContent = Math.floor((diff / 1000) % 60);
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+  </script>
 </body>
 </html>
